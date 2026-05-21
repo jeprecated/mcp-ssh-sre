@@ -20,7 +20,7 @@ docker run -d \
   -e SSH_KEY_PATH=/keys/id_ed25519 \
   -e OAUTH_SERVER_URL=https://mcp.example.com \
   -v ~/.ssh/id_ed25519_mcp:/keys/id_ed25519:ro \
-  ghcr.io/ohare93/mcp-ssh-sre:latest
+  ghcr.io/jeprecated/mcp-ssh-sre:latest
 ```
 
 Or with Docker Compose (`docker-compose.http.yml`):
@@ -28,7 +28,7 @@ Or with Docker Compose (`docker-compose.http.yml`):
 ```yaml
 services:
   mcp-ssh-sre:
-    image: ghcr.io/ohare93/mcp-ssh-sre:latest
+    image: ghcr.io/jeprecated/mcp-ssh-sre:latest
     ports:
       - "3000:3000"
     environment:
@@ -80,7 +80,7 @@ docker run -d --env-file .env mcp-ssh-sre
 ### Installation
 
 ```bash
-git clone https://github.com/ohare93/mcp-ssh-sre.git
+git clone https://github.com/jeprecated/mcp-ssh-sre.git
 cd mcp-ssh-sre
 npm install
 npm run build

@@ -4,7 +4,7 @@ An MCP server providing read-only server monitoring tools to AI assistants. Runs
 
 ## Quick Start (Docker)
 
-Pre-built images available on [GitHub Container Registry](https://github.com/ohare93/mcp-ssh-sre/pkgs/container/mcp-ssh-sre).
+Pre-built images available on [GitHub Container Registry](https://github.com/jeprecated/mcp-ssh-sre/pkgs/container/mcp-ssh-sre).
 
 ```bash
 docker run -d \
@@ -13,7 +13,7 @@ docker run -d \
   -e SSH_USERNAME=mcp-readonly \
   -e SSH_KEY_PATH=/keys/id_ed25519 \
   -v ~/.ssh/id_ed25519_mcp:/keys/id_ed25519:ro \
-  ghcr.io/ohare93/mcp-ssh-sre:latest
+  ghcr.io/jeprecated/mcp-ssh-sre:latest
 ```
 
 Then add to your MCP client:
@@ -113,4 +113,4 @@ ISC
 
 ## Support
 
-For issues and questions, open an issue on the [GitHub repository](https://github.com/ohare93/mcp-ssh-sre).
+For issues and questions, open an issue on the [GitHub repository](https://github.com/jeprecated/mcp-ssh-sre).

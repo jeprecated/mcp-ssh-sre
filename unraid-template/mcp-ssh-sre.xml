@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>mcp-ssh-sre</Name>
-  <Repository>ghcr.io/ohare93/mcp-ssh-sre:latest</Repository>
-  <Registry>https://github.com/ohare93/mcp-ssh-sre/pkgs/container/mcp-ssh-sre</Registry>
+  <Repository>ghcr.io/jeprecated/mcp-ssh-sre:latest</Repository>
+  <Registry>https://github.com/jeprecated/mcp-ssh-sre/pkgs/container/mcp-ssh-sre</Registry>
   <Network>host</Network>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/XXXXX-mcp-ssh-sre-support</Support>
-  <Project>https://github.com/ohare93/mcp-ssh-sre</Project>
+  <Project>https://github.com/jeprecated/mcp-ssh-sre</Project>
   <Overview>MCP server providing secure, read-only SSH access for AI assistants like Claude. Ask natural language questions about your Unraid server:&#xD;
 &#xD;
 - "Why is my Plex container crashing?"&#xD;
@@ -20,8 +20,8 @@ Features 12 tool modules with 79+ actions covering Docker management, storage/ar
 SETUP: Create a dedicated read-only SSH user (mcp-readonly) and generate an SSH key pair. The container connects via SSH to run diagnostic commands.</Overview>
   <Category>Tools: Network:Management HomeAutomation:</Category>
   <WebUI>http://[IP]:[PORT:3000]/health</WebUI>
-  <Icon>https://raw.githubusercontent.com/ohare93/mcp-ssh-sre/main/unraid-template/mcp-ssh-sre.png</Icon>
-  <TemplateURL>https://raw.githubusercontent.com/ohare93/mcp-ssh-sre/main/unraid-template/mcp-ssh-sre.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/jeprecated/mcp-ssh-sre/main/unraid-template/mcp-ssh-sre.png</Icon>
+  <TemplateURL>https://raw.githubusercontent.com/jeprecated/mcp-ssh-sre/main/unraid-template/mcp-ssh-sre.xml</TemplateURL>
   <ExtraParams>--restart unless-stopped</ExtraParams>
   <Config Name="HTTP Port" Target="3000" Default="3000" Mode="tcp" Description="MCP HTTP endpoint port. Connect your AI client to http://unraid-ip:3000/mcp" Type="Port" Display="always" Required="true" Mask="false">3000</Config>
   <Config Name="SSH Private Key" Target="/home/mcp/.ssh/id_rsa" Default="/root/.ssh/id_rsa_mcp" Mode="ro" Description="Path to SSH private key file on the host. Create with: ssh-keygen -t ed25519 -f /root/.ssh/id_rsa_mcp" Type="Path" Display="always" Required="true" Mask="false"/>
