@@ -80,19 +80,41 @@ async function main() {
   const app = express();
   const port = parseInt(process.env.HTTP_PORT || "3000");
 
-  // Request logging middleware
+  // Request logging middleware.
+  // Health-check requests (GET /health) are deliberately suppressed when the
+  // response is 200 OK.  Container orchestrators and uptime monitors hit this
+  // endpoint every 30 seconds; logging every probe produces hundreds of
+  // identical lines per hour that drown out meaningful events without adding
+  // any diagnostic value — a healthy response is, by definition, unremarkable.
+  //
+  // Crucially, non-200 responses (e.g. 503 when the SSH connection is down)
+  // are *not* suppressed.  A degraded health check is an actionable signal and
+  // should appear in the log just like any other error.  Both the incoming
+  // request line and the response status line are emitted together at response
+  // time so the context is never lost.
   app.use((req: Request, res: Response, next: NextFunction) => {
-    const timestamp = new Date().toISOString();
-    log.info(`${req.method} ${req.path} - ${req.ip}`);
+    const requestLine = `${req.method} ${req.path} - ${req.ip}`;
+    const isHealthCheck = req.path === "/health";
 
-    if (req.body && Object.keys(req.body).length > 0) {
-      log.info(`Request body: ${JSON.stringify(req.body).substring(0, 200)}`);
+    // For all non-health-check requests log the incoming line immediately.
+    if (!isHealthCheck) {
+      log.info(requestLine);
+
+      if (req.body && Object.keys(req.body).length > 0) {
+        log.info(`Request body: ${JSON.stringify(req.body).substring(0, 200)}`);
+      }
     }
 
-    // Log response
+    // Log response — for health checks only when something is wrong.
     const originalSend = res.send;
     res.send = function (data: any) {
-      log.info(`${req.method} ${req.path} - ${res.statusCode}`);
+      if (!isHealthCheck || res.statusCode !== 200) {
+        // Emit the deferred request line first so log order stays consistent.
+        if (isHealthCheck) {
+          log.info(requestLine);
+        }
+        log.info(`${req.method} ${req.path} - ${res.statusCode}`);
+      }
       return originalSend.call(this, data);
     };
 
