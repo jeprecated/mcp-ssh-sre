@@ -33,7 +33,9 @@ describe('SSHConnectionManager', () => {
     };
 
     // Mock NodeSSH constructor
-    vi.mocked(NodeSSH).mockImplementation(() => mockSSH);
+    vi.mocked(NodeSSH).mockImplementation(function () {
+      return mockSSH;
+    });
   });
 
   afterEach(() => {
